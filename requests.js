@@ -97,14 +97,32 @@ var requestApi = /** @class */ (function () {
      */
     requestApi.prototype.username = function (username) {
         return __awaiter(this, void 0, void 0, function () {
+            var url1, options, dataFetch, url2, res, dataUrl;
             return __generator(this, function (_a) {
-                if (!username)
-                    throw new Error("No se ingreso un nickname");
-                console.log("Module en mantenimiento");
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        if (!username)
+                            throw new Error("No se ingreso un nickname");
+                        url1 = "https://api.mojang.com/users/profiles/minecraft/" + username;
+                        options = {
+                            method: "GET"
+                        };
+                        return [4 /*yield*/, node_fetch_1["default"](url1, options).then(function (res) { return res.json(); })];
+                    case 1:
+                        dataFetch = _a.sent();
+                        url2 = "https://api.mojang.com/user/profiles/" + dataFetch.id + "/names";
+                        return [4 /*yield*/, node_fetch_1["default"]("" + url2, options)];
+                    case 2:
+                        res = _a.sent();
+                        return [4 /*yield*/, res.json()];
+                    case 3:
+                        dataUrl = _a.sent();
+                        return [2 /*return*/, dataUrl];
+                }
             });
         });
     };
+    ;
     return requestApi;
 }());
 exports.requestApi = requestApi;
