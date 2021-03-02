@@ -86,7 +86,7 @@ const client = new Client();
 
 client.on("ready", async () => {// Usamos una función asincronica para usar await.
 	// Evento ready se ejecuta cuando el bot inicia sesión.
-	setInterval(() => {
+	setInterval(async () => {
 		const request = await api.server("MiServer"); // Deben colocar la ip de su servidor acá.
 		const usersOnline = request.players.online;
     	client.user.setActivity(`${usersOnline} en mi network.`, {
