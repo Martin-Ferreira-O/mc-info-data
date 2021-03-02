@@ -7,11 +7,8 @@ Api completamente facil de usar.
 
 #### Ejemplos
 ```js
-//Usando ecmascript 6
-import { requestApi } from "mc-info-data";
-// O tambien.
 const {requestApi} = require("mc-info-data");
-const client = new requestApi;// Creamos un nuevo objeto.
+const client = new requestApi();// Creamos un nuevo objeto.
 
 // Para obtener información de un servidor.
 client.server("hypixel.net").then(res => {// Devuelve promesa por lo que tambien podemos usar la sintaxis de async/await
