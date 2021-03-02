@@ -1,6 +1,5 @@
-# Minecraft-Api-Easy
-API en mantenimiento para obtener información de un servidor de minecraft
-
+# Mc-info-data
+Api completamente facil de usar.
 ## ¿Porqué usarlo?
 ### 🌀 Creado con TypeScript.
 ### 📦 Orientado a objetos
