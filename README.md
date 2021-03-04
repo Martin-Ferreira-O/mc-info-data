@@ -5,6 +5,19 @@ Api completamente facil de usar.
 ### 📦 Orientado a objetos
 ### 💥 Facil de usar
 
+
+#### ChangeLog
+```diff
++ Metodo body 
+(Muestra la imagen de una skin premium)
++ Metodo skin
+(Muestra la imagen para descargar de una skin premium)
++ Metodo namemcLikes
+(Mostrara las personas que han otorgado likes a un servidor de minecraft Mediante NameMC)
+- Muchos bugs arreglados.
+Donde se hacian las requests
+```
+
 #### Ejemplos
 ```js
 const {requestApi} = require("mc-info-data");
@@ -43,7 +56,7 @@ Response
 ```
 #### Para obtener el historial de nicks de un usuario en minecraft
 ```js
-client.username("Nickname, example Rappi").then(m => {
+client.history("Nickname, example Rappi").then(m => {
   console.log(m)
 });
 /*
@@ -60,9 +73,9 @@ Response
 */
 // Podrian usar un forEach para ver cada elemento del array y el npm momentjs para obtener una legible.
 
-client.username("Rappi").then(m => {
-  m.forEach(async (valor, iteracion) => {
-    console.log(v.name + " cambiado el " + moment(v.changedToAt).format("L"))
+client.history("Rappi").then(m => {
+  m.forEach(async (v) => {
+    await console.log(v.name + " cambiado el " + moment(v.changedToAt).format("L"))
   })
 });
 ```
@@ -71,8 +84,14 @@ client.username("Rappi").then(m => {
 ```js
 server() // Recibe de parametro una IP a buscar información. <String> 
 // Devuelve una promesa (Objeto).
-username() // Recibe de parametro un nickname a buscar información
+history() // Recibe de parametro un nickname a buscar información
 // Devuelve una promesa (Array).
+namemcLike() // Recibe de parametro un servidor a buscar información
+// Devuelve una promesa (Array de nicks)
+body() // Recibe de parametro un nickname, muestra el cuerpo de una skin
+// Devuelve una promesa (URL de imagen)
+skin() // Recibe de parametro un nickname muestra una skin para descarfar
+// Devuelve una promesa (URL de imagen)
 ```
 
 ### Ejemplos usando discord.js
