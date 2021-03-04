@@ -95,7 +95,7 @@ var requestApi = /** @class */ (function () {
      *
      * @param username El nickname a buscar información.
      */
-    requestApi.prototype.username = function (username) {
+    requestApi.prototype.history = function (username) {
         return __awaiter(this, void 0, void 0, function () {
             var url1, options, dataFetch, url2, res, dataUrl;
             return __generator(this, function (_a) {
@@ -107,7 +107,9 @@ var requestApi = /** @class */ (function () {
                         options = {
                             method: "GET"
                         };
-                        return [4 /*yield*/, node_fetch_1["default"](url1, options).then(function (res) { return res.json(); })];
+                        return [4 /*yield*/, node_fetch_1["default"](url1, options).then(function (res) { return res.json(); })["catch"](function (err) {
+                                throw new Error("Username invalido.");
+                            })];
                     case 1:
                         dataFetch = _a.sent();
                         url2 = "https://api.mojang.com/user/profiles/" + dataFetch.id + "/names";
@@ -118,6 +120,115 @@ var requestApi = /** @class */ (function () {
                     case 3:
                         dataUrl = _a.sent();
                         return [2 /*return*/, dataUrl];
+                }
+            });
+        });
+    };
+    ;
+    /**
+     * Sirve para obtener la skin de un usuario.
+     * @param username <Nickname a buscar información>
+     * return a promise <Link of image>
+     */
+    requestApi.prototype.skin = function (username) {
+        return __awaiter(this, void 0, void 0, function () {
+            var url1, options, dataFetch, url2, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        url1 = "https://api.mojang.com/users/profiles/minecraft/" + username;
+                        options = {
+                            method: "GET"
+                        };
+                        return [4 /*yield*/, node_fetch_1["default"](url1, options).then(function (res) { return res.json(); })["catch"](function (err) {
+                                throw new Error("Username invalido.");
+                            })];
+                    case 1:
+                        dataFetch = _a.sent();
+                        url2 = "https://crafatar.com/skins/" + dataFetch.id + "?size=4098&default=MHF_Steve&overlay";
+                        return [4 /*yield*/, node_fetch_1["default"](url2, options)];
+                    case 2:
+                        response = _a.sent();
+                        if (response.status !== 200)
+                            throw new Error("Error en la API, error de conexion.");
+                        return [2 /*return*/, response.url];
+                }
+            });
+        });
+    };
+    /**
+    * Sirve para obtener la skin de un usuario.
+    * @param username <Nickname a buscar información>
+    * return a promise <Link of image>
+    */
+    requestApi.prototype.body = function (username) {
+        return __awaiter(this, void 0, void 0, function () {
+            var url1, options, dataFetch, url2, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!username)
+                            throw new Error("No se ingreso una IP");
+                        url1 = "https://api.mojang.com/users/profiles/minecraft/" + username;
+                        options = {
+                            method: "GET"
+                        };
+                        return [4 /*yield*/, node_fetch_1["default"](url1, options).then(function (res) { return res.json(); })["catch"](function (err) {
+                                throw new Error("Username invalido.");
+                            })];
+                    case 1:
+                        dataFetch = _a.sent();
+                        url2 = "https://crafatar.com/renders/body/" + dataFetch.id + "?size=4098&default=MHF_Steve&overlay";
+                        return [4 /*yield*/, node_fetch_1["default"](url2, options)];
+                    case 2:
+                        response = _a.sent();
+                        if (response.status !== 200)
+                            throw new Error("Error en la API, error de conexion.");
+                        return [2 /*return*/, response.url];
+                }
+            });
+        });
+    };
+    ;
+    requestApi.prototype.namemcLinks = function (ipServer) {
+        return __awaiter(this, void 0, void 0, function () {
+            var objetoError, fetcheado, response, myArray, i, valor, valorSinJson, nicknameUsuario;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!ipServer)
+                            throw new Error("No se ingreso una IP");
+                        objetoError = {
+                            message: "El servidor ingresado no tiene ningun like"
+                        };
+                        return [4 /*yield*/, node_fetch_1["default"]("https://api.namemc.com/server/" + ipServer + "/likes")];
+                    case 1:
+                        fetcheado = _a.sent();
+                        return [4 /*yield*/, fetcheado.json()];
+                    case 2:
+                        response = _a.sent();
+                        if (fetcheado.status == 404)
+                            throw new Error("No existe el servidor.");
+                        myArray = [];
+                        i = 0;
+                        _a.label = 3;
+                    case 3:
+                        if (!(i < response.length)) return [3 /*break*/, 8];
+                        valor = response[i];
+                        return [4 /*yield*/, node_fetch_1["default"]("https://sessionserver.mojang.com/session/minecraft/profile/" + valor)];
+                    case 4:
+                        valorSinJson = _a.sent();
+                        return [4 /*yield*/, valorSinJson.json()];
+                    case 5:
+                        nicknameUsuario = _a.sent();
+                        return [4 /*yield*/, myArray.push(nicknameUsuario.name)];
+                    case 6:
+                        _a.sent();
+                        _a.label = 7;
+                    case 7:
+                        i++;
+                        return [3 /*break*/, 3];
+                    case 8: return [2 /*return*/, myArray];
                 }
             });
         });
