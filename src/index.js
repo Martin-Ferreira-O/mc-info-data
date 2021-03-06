@@ -42,13 +42,12 @@ var requestApi = /** @class */ (function () {
     function requestApi() {
     }
     /**
-     * Obtienes la información de un servidor.
+     *
      * @param ip La ip a buscar información.
-     * @returns {Promise<Pending>} Un objeto json de información.
      */
     requestApi.prototype.server = function (ip) {
         return __awaiter(this, void 0, void 0, function () {
-            var url, options, objeto, res, json, err_1;
+            var url, options, objeto, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -60,44 +59,41 @@ var requestApi = /** @class */ (function () {
                         };
                         _a.label = 1;
                     case 1:
-                        _a.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, node_fetch_1["default"]("" + url + ip, options)];
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, node_fetch_1["default"]("" + url + ip, options).then(function (res) { return res.json(); }).then(function (json) {
+                                objeto = {
+                                    ip: json.ip,
+                                    port: json.port,
+                                    motd: {
+                                        raw: json.motd.raw,
+                                        clean: json.motd.clean,
+                                        html: json.motd.html
+                                    },
+                                    players: {
+                                        online: json.players.online,
+                                        max: json.players.max,
+                                        listUsers: json.players.list
+                                    },
+                                    version: json.version,
+                                    hostname: json.hostname,
+                                    software: json.software
+                                };
+                            })];
                     case 2:
-                        res = _a.sent();
-                        return [4 /*yield*/, res.json()];
+                        _a.sent();
+                        return [3 /*break*/, 4];
                     case 3:
-                        json = _a.sent();
-                        objeto = {
-                            ip: json.ip,
-                            port: json.port,
-                            motd: {
-                                raw: json.motd.raw,
-                                clean: json.motd.clean,
-                                html: json.motd.html
-                            },
-                            players: {
-                                online: json.players.online,
-                                max: json.players.max,
-                                listUsers: json.players.list
-                            },
-                            version: json.version,
-                            hostname: json.hostname,
-                            software: json.software
-                        };
-                        return [3 /*break*/, 5];
-                    case 4:
                         err_1 = _a.sent();
                         throw new Error("[ERROR] La ip introducida no es valida.");
-                    case 5: return [2 /*return*/, objeto];
+                    case 4: return [2 /*return*/, objeto];
                 }
             });
         });
     };
     ;
     /**
-     * Obtienes un historial de nicks
+     *
      * @param username El nickname a buscar información.
-     * @returns {Promise<Pending>} Historial de nicknames del usuario
      */
     requestApi.prototype.history = function (username) {
         return __awaiter(this, void 0, void 0, function () {
@@ -106,7 +102,7 @@ var requestApi = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!username)
-                            throw new Error("No se ingreso ningun nickname.");
+                            throw new Error("No se ingreso un nickname");
                         url1 = "https://api.mojang.com/users/profiles/minecraft/" + username;
                         options = {
                             method: "GET"
@@ -132,11 +128,11 @@ var requestApi = /** @class */ (function () {
     /**
      * Sirve para obtener la skin de un usuario.
      * @param username <Nickname a buscar información>
-     * @returns {Promise<Buffer>} Buffer de la imagen de la skin.
+     * return a promise <Link of image>
      */
     requestApi.prototype.skin = function (username) {
         return __awaiter(this, void 0, void 0, function () {
-            var url1, options, dataFetch, url2, response, buffer;
+            var url1, options, dataFetch, url2, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -155,22 +151,19 @@ var requestApi = /** @class */ (function () {
                         response = _a.sent();
                         if (response.status !== 200)
                             throw new Error("Error en la API, error de conexion.");
-                        return [4 /*yield*/, response.buffer()];
-                    case 3:
-                        buffer = _a.sent();
-                        return [2 /*return*/, buffer];
+                        return [2 /*return*/, response.url];
                 }
             });
         });
     };
     /**
-    * Sirve para poder obtener una imagen del cuerpo de una skin.
-    * @param username <Nickname a buscar>
-    * @returns {Promise<Pending>} Link de imagen el cuerpo de una skin
+    * Sirve para obtener la skin de un usuario.
+    * @param username <Nickname a buscar información>
+    * return a promise <Link of image>
     */
     requestApi.prototype.body = function (username) {
         return __awaiter(this, void 0, void 0, function () {
-            var url1, options, dataFetch, url2, response, buffer;
+            var url1, options, dataFetch, url2, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -191,32 +184,24 @@ var requestApi = /** @class */ (function () {
                         response = _a.sent();
                         if (response.status !== 200)
                             throw new Error("Error en la API, error de conexion.");
-                        return [4 /*yield*/, response.buffer()];
-                    case 3:
-                        buffer = _a.sent();
-                        return [2 /*return*/, buffer];
+                        return [2 /*return*/, response.url];
                 }
             });
         });
     };
     ;
-    /**
-    * Obtienes todos los nicknames o personas que le han dado like al servidor
-    * @param ipServer <Servidor a buscar>
-    * @returns {Promise<Pending>} Todos los nicks de las personas que han dado like por el servidor, si supera los 500 respondera un numero
-    */
-    requestApi.prototype.namemcLikes = function (ipServer) {
+    requestApi.prototype.namemcLinks = function (ipServer) {
         return __awaiter(this, void 0, void 0, function () {
-            var options, fetcheado, response, myArray, i, valor, valorSinJson, nicknameUsuario;
+            var objetoError, fetcheado, response, myArray, i, valor, valorSinJson, nicknameUsuario;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!ipServer)
                             throw new Error("No se ingreso una IP");
-                        options = {
-                            method: "GET"
+                        objetoError = {
+                            message: "El servidor ingresado no tiene ningun like"
                         };
-                        return [4 /*yield*/, node_fetch_1["default"]("https://api.namemc.com/server/" + ipServer + "/likes", options)];
+                        return [4 /*yield*/, node_fetch_1["default"]("https://api.namemc.com/server/" + ipServer + "/likes")];
                     case 1:
                         fetcheado = _a.sent();
                         return [4 /*yield*/, fetcheado.json()];
@@ -224,62 +209,31 @@ var requestApi = /** @class */ (function () {
                         response = _a.sent();
                         if (fetcheado.status == 404)
                             throw new Error("No existe el servidor.");
-                        if (!(response.length >= 500)) return [3 /*break*/, 3];
-                        return [2 /*return*/, response.length];
-                    case 3:
                         myArray = [];
                         i = 0;
-                        _a.label = 4;
-                    case 4:
-                        if (!(i < response.length)) return [3 /*break*/, 9];
+                        _a.label = 3;
+                    case 3:
+                        if (!(i < response.length)) return [3 /*break*/, 8];
                         valor = response[i];
-                        return [4 /*yield*/, node_fetch_1["default"]("https://sessionserver.mojang.com/session/minecraft/profile/" + valor, options)];
-                    case 5:
+                        return [4 /*yield*/, node_fetch_1["default"]("https://sessionserver.mojang.com/session/minecraft/profile/" + valor)];
+                    case 4:
                         valorSinJson = _a.sent();
                         return [4 /*yield*/, valorSinJson.json()];
-                    case 6:
+                    case 5:
                         nicknameUsuario = _a.sent();
                         return [4 /*yield*/, myArray.push(nicknameUsuario.name)];
-                    case 7:
+                    case 6:
                         _a.sent();
-                        _a.label = 8;
-                    case 8:
+                        _a.label = 7;
+                    case 7:
                         i++;
-                        return [3 /*break*/, 4];
-                    case 9: return [2 /*return*/, myArray];
+                        return [3 /*break*/, 3];
+                    case 8: return [2 /*return*/, myArray];
                 }
             });
         });
     };
     ;
-    /**
-     * Obtienes el icono de un servidor.
-     * @param ipServer Ip del servidor
-     * @returns {Promise<Buffer>} Icono del servidor
-     */
-    requestApi.prototype.icon = function (ipServer) {
-        return __awaiter(this, void 0, void 0, function () {
-            var options, url, fetchResponse, response;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!ipServer)
-                            throw new Error("No se ingreso ningun servidor.");
-                        options = {
-                            method: "GET"
-                        };
-                        url = "https://api.mcsrvstat.us/icon/" + ipServer;
-                        return [4 /*yield*/, node_fetch_1["default"](url, options)];
-                    case 1:
-                        fetchResponse = _a.sent();
-                        return [4 /*yield*/, fetchResponse.buffer()];
-                    case 2:
-                        response = _a.sent();
-                        return [2 /*return*/, response];
-                }
-            });
-        });
-    };
     return requestApi;
 }());
 exports.requestApi = requestApi;
