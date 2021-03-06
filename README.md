@@ -1,10 +1,29 @@
 # Mc-info-data
-Api completamente facil de usar.
+Api completamente fácil de usar para obtener información útil de cualquier servidor o usuario en Minecraft.
 ## ¿Porqué usarlo?
 ### 🌀 Creado con TypeScript.
 ### 📦 Orientado a objetos
 ### 💥 Facil de usar
 
+
+#### ChangeLog
+```diff
++ Metodo body 
+Muestra la imagen de una skin premium
++ Metodo skin
+Muestra la imagen para descargar de una skin premium
++ Metodo namemcLikes
+Mostrara las personas que han otorgado likes a un servidor de minecraft Mediante NameMC
+- Muchos bugs arreglados.
+Donde se hacian las requests
+```
+
+
+### Support
+```
+Puedes encontrar soporte en este discord.
+https://discord.gg/xqS8PZB
+```
 #### Ejemplos
 ```js
 const {requestApi} = require("mc-info-data");
@@ -43,7 +62,7 @@ Response
 ```
 #### Para obtener el historial de nicks de un usuario en minecraft
 ```js
-client.username("Nickname, example Rappi").then(m => {
+client.history("Nickname, example Rappi").then(m => {
   console.log(m)
 });
 /*
@@ -60,9 +79,9 @@ Response
 */
 // Podrian usar un forEach para ver cada elemento del array y el npm momentjs para obtener una legible.
 
-client.username("Rappi").then(m => {
-  m.forEach(async (valor, iteracion) => {
-    console.log(v.name + " cambiado el " + moment(v.changedToAt).format("L"))
+client.history("Rappi").then(m => {
+  m.forEach(async (v) => {
+    await console.log(v.name + " cambiado el " + moment(v.changedToAt).format("L"))
   })
 });
 ```
@@ -70,9 +89,22 @@ client.username("Rappi").then(m => {
 ### Metodos.
 ```js
 server() // Recibe de parametro una IP a buscar información. <String> 
-// Devuelve una promesa (Objeto).
-username() // Recibe de parametro un nickname a buscar información
-// Devuelve una promesa (Array).
+// Devuelve una promesa (Objeto con información del servidor).
+
+history() // Recibe de parametro un nickname a buscar información
+// Devuelve una promesa (Array de nicknames cambiados por el usuario).
+
+namemcLikes() // Recibe de parametro un servidor a buscar información
+// Devuelve una promesa (Array de nicksnames || Si el array supera los 500 nicknames otorgara un numero.)
+
+body() // Recibe de parametro un nickname, muestra el cuerpo de una skin
+// Devuelve una promesa (Buffer de la imagen)
+
+skin() // Recibe de parametro un nickname muestra una skin para descarfar
+// Devuelve una promesa (Buffer de la imagen)
+
+icon() // Recibe de parametro un servidor de minecraft
+// Devuelve una promesa (Buffer del icono)
 ```
 
 ### Ejemplos usando discord.js
@@ -86,7 +118,7 @@ const client = new Client();
 
 client.on("ready", async () => {// Usamos una función asincronica para usar await.
 	// Evento ready se ejecuta cuando el bot inicia sesión.
-	setInterval(() => {
+	setInterval(async () => {
 		const request = await api.server("MiServer"); // Deben colocar la ip de su servidor acá.
 		const usersOnline = request.players.online;
     	client.user.setActivity(`${usersOnline} en mi network.`, {

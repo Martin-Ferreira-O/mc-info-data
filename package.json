@@ -1,5 +1,32 @@
 {
-  "dependencies": {
-    "node-fetch": "^2.6.1"
-  }
+    "dependencies": {
+        "node-fetch": "^2.6.1"
+    },
+    "name": "mc-info-data",
+    "description": "Api completamente facil de usar para sacar información de servidores y usuarios en minecraft.",
+    "version": "1.4.0",
+    "main": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Kapone-dev/Minecraft-Api-Easy.git"
+    },
+    "keywords": [
+        "Minecraft",
+        "Requests",
+        "fetch",
+        "Mc-info",
+        "Mcinfo",
+        "mcdata",
+        "minecraft-data",
+        "minecraft-info"
+    ],
+    "author": "kapone",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Kapone-dev/Minecraft-Api-Easy/issues"
+    },
+    "homepage": "https://github.com/Kapone-dev/Minecraft-Api-Easy#readme"
 }
