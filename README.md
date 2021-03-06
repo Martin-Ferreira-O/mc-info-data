@@ -105,15 +105,6 @@ skin() // Recibe de parametro un nickname muestra una skin para descarfar
 icon() // Recibe de parametro un servidor de minecraft
 // Devuelve una promesa (Buffer del icono)
 
-// Devuelve una promesa (Objeto).
-history() // Recibe de parametro un nickname a buscar información
-// Devuelve una promesa (Array).
-namemcLike() // Recibe de parametro un servidor a buscar información
-// Devuelve una promesa (Array de nicks)
-body() // Recibe de parametro un nickname, muestra el cuerpo de una skin
-// Devuelve una promesa (URL de imagen)
-skin() // Recibe de parametro un nickname muestra una skin para descarfar
-// Devuelve una promesa (URL de imagen)
 ```
 
 ### Ejemplos usando discord.js
