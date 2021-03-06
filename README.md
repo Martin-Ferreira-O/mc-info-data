@@ -9,32 +9,20 @@ Api completamente fácil de usar para obtener información útil de cualquier se
 #### ChangeLog
 ```diff
 + Metodo body 
-<<<<<<< HEAD
 Muestra la imagen de una skin premium
 + Metodo skin
 Muestra la imagen para descargar de una skin premium
 + Metodo namemcLikes
 Mostrara las personas que han otorgado likes a un servidor de minecraft Mediante NameMC
-=======
-(Muestra la imagen de una skin premium)
-+ Metodo skin
-(Muestra la imagen para descargar de una skin premium)
-+ Metodo namemcLikes
-(Mostrara las personas que han otorgado likes a un servidor de minecraft Mediante NameMC)
->>>>>>> 5d06c3e22164e5ee30bcc80c4d0fc7ffefd521e3
 - Muchos bugs arreglados.
 Donde se hacian las requests
 ```
-
-<<<<<<< HEAD
 
 ### Support
 ```
 Puedes encontrar soporte en este discord.
 https://discord.gg/xqS8PZB
 ```
-=======
->>>>>>> 5d06c3e22164e5ee30bcc80c4d0fc7ffefd521e3
 #### Ejemplos
 ```js
 const {requestApi} = require("mc-info-data");
@@ -100,7 +88,6 @@ client.history("Rappi").then(m => {
 ### Metodos.
 ```js
 server() // Recibe de parametro una IP a buscar información. <String> 
-<<<<<<< HEAD
 // Devuelve una promesa (Objeto con información del servidor).
 
 history() // Recibe de parametro un nickname a buscar información
@@ -117,7 +104,7 @@ skin() // Recibe de parametro un nickname muestra una skin para descarfar
 
 icon() // Recibe de parametro un servidor de minecraft
 // Devuelve una promesa (Buffer del icono)
-=======
+
 // Devuelve una promesa (Objeto).
 history() // Recibe de parametro un nickname a buscar información
 // Devuelve una promesa (Array).
@@ -127,7 +114,6 @@ body() // Recibe de parametro un nickname, muestra el cuerpo de una skin
 // Devuelve una promesa (URL de imagen)
 skin() // Recibe de parametro un nickname muestra una skin para descarfar
 // Devuelve una promesa (URL de imagen)
->>>>>>> 5d06c3e22164e5ee30bcc80c4d0fc7ffefd521e3
 ```
 
 ### Ejemplos usando discord.js
