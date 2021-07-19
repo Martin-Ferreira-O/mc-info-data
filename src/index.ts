@@ -1,115 +1,96 @@
 const fetch = require("node-fetch");
-const options = { method: "GET" }
+const options = { method: "GET", headers: { "Content-Type": "Application/json" } };
 class requestApi {
     constructor() {
     }
     
     /**
-     * Obtienes la información de un servidor.
-     * @param ip La ip a buscar información.
-     * @returns {Promise<Pending>} Un objeto json de información.
+     * You get the information from a server.
+     * @param ip The ip to find information.
+     * @returns {Promise<Pending>} An information json object.
      */
     async server(ip: string): Promise<Object> {
-        if (!ip) throw new Error("No se introducio ninguna ip");
-        if(typeof ip != 'string') throw new Error("La ip debe ser una string.")
-        const url = "https://api.mcsrvstat.us/2/";
-        const res = await fetch(`${url}${ip}`, options).catch(() => { throw Error("IP INTRODUCIDA VALIDA.") });
+        if(typeof ip != 'string') new Error("The ip must be a string I received " + typeof ip);
+        const url = `https://api.mcsrvstat.us/2/${ip}`;
+        const res = await fetch(url, options).catch(() => { throw Error("INVALID INTRODUCED IP.") });
         const json = await res.json();
         return json;
     };
     /**
-     * Obtienes un historial de nicks
-     * @param username El nickname a buscar información.
-     * @returns {Promise<Pending>} Historial de nicknames del usuario
+     * You get a history of nicknames
+     * @param username The nickname to search for information.
+     * @returns {Promise<Pending>} User nickname history
      */
     async history(username: string): Promise<Object> {
-        if (!username) throw new Error("No se ingreso ningun nickname.");
-        const url1 = "https://api.mojang.com/users/profiles/minecraft/" + username;;
-        const dataFetch = await fetch(url1, options).then((res: { json: () => any; }) => res.json())
-            .catch(() => {
-                throw new Error("Username invalido.");
-            });
-        const url2 = `https://api.mojang.com/user/profiles/${dataFetch.id}/names`;
-        const res = await fetch(`${url2}`, options);
-        const dataUrl = await res.json();
-        return dataUrl;
+        if (typeof username != 'string') TypeError("The ip must be a string I received " + typeof username)
+        const url = "https://api.mojang.com/users/profiles/minecraft/" + username;
+        const res = await fetch(url, options).then((res) => res.json()).catch(() => { TypeError("Username invalido."); });
+        const url2 = `https://api.mojang.com/user/profiles/${res.id}/names`;
+        const resHistory = await fetch(`${url2}`, options).then((res) => res.json());
+        return resHistory;
     };
 
     /**
-     * Sirve para obtener la skin de un usuario.
-     * @param username <Nickname a buscar información>
-     * @returns {Promise<Buffer>} Buffer de la imagen de la skin.
+     * It is used to obtain the skin of a user.
+     * @param username <Nickname to find information>
+     * @returns {Promise<Buffer>} Skin image buffer.
      */
     async skin(username: string): Promise<Buffer> {
+        if(typeof username != 'string') new Error("The username must be a string I received " + typeof username);
         const url1 = "https://api.mojang.com/users/profiles/minecraft/" + username;;
         const dataFetch = await fetch(url1, options).then((res: any) => res.json()).catch(() => {
-            throw new Error("Username invalido.");
+            new Error("Username invalido.");
         });
        
         const url2 = `https://crafatar.com/skins/${dataFetch.id}?size=4098&default=MHF_Steve&overlay`;
         const response = await fetch(url2, options);
-        if (response.status !== 200) throw new Error("Error en la API, error de conexion.")
+        if (response.status !== 200) new Error("Error en la API, error de conexion.")
         const buffer = await response.buffer();
         return buffer;
     }
     /**
-    * Sirve para poder obtener una imagen del cuerpo de una skin.
-    * @param username <Nickname a buscar>
-    * @returns {Promise<Pending>} Link de imagen el cuerpo de una skin
+    * It is used to obtain an image of the body of a skin.
+    * @param username <Nickname to find>
+    * @returns {Promise<Pending>} Image link the body of a skin
     */
 
     async body(username: string): Promise<Buffer> {
-        if (!username) throw new Error("No se ingreso una IP");
+        if(typeof username != 'string') new Error("The username must be a string I received " + typeof username);
         const url1 = "https://api.mojang.com/users/profiles/minecraft/" + username;
 
-
         const dataFetch = await fetch(url1, options).then((res: any) => res.json()).catch(() => {
-            throw new Error("Username invalido.");
+            new Error("Username invalido.");
         });
         const url2 = `https://crafatar.com/renders/body/${dataFetch.id}?size=4098&default=MHF_Steve&overlay`;
         const response = await fetch(url2, options);
-        if (response.status !== 200) throw new Error("Error en la API, error de conexion.")
         const buffer = await response.buffer();
-        return buffer;
+        if (buffer) return buffer; else Error("Invalid nickname")
     };
 
     /**
-    * Obtienes todos los nicknames o personas que le han dado like al servidor
-    * @param ipServer <Servidor a buscar>
-    * @returns {Promise<Pending>} Todos los nicks de las personas que han dado like por el servidor, si supera los 500 respondera un numero
+    * Get all the nicknames or people who have liked the server
+    * @param ip <Server to find>
+    * @returns {Promise<number>} How many people have voted for a server
     */
 
-    async namemcLikes(ipServer: string): Promise<any> {
-        if (!ipServer) throw new Error("No se ingreso una IP");
-        const fetcheado = await fetch(`https://api.namemc.com/server/${ipServer}/likes`, options);
+    async namemcLikes(ip: string): Promise<any> {
+        if(typeof ip != 'string') new Error("The ip must be a string I received " + typeof ip);
+        const fetcheado = await fetch(`https://api.namemc.com/server/${ip}/likes`, options);
         const response = await fetcheado.json();
-        if (fetcheado.status == 404) throw new Error("No existe el servidor.");
-        if (response.length >= 20) {
-            return response.length;
-        } else {
-            const myArray = [];
-            for (let i = 0; i < response.length; i++) {
-                const valorSinJson = await fetch(`https://sessionserver.mojang.com/session/minecraft/profile/${response[i]}`, options);
-                const nicknameUsuario = await valorSinJson.json();
-                myArray.push(nicknameUsuario.name);
-            }
-            return myArray;
-        }
+        if (fetcheado.status === 404) new Error("Server doesn't exist.");
+
+    return response.length;
     };
 
     /**
-     * Obtienes el icono de un servidor.
-     * @param ipServer Ip del servidor
-     * @returns {Promise<Buffer>} Icono del servidor
+     * Get the icon of the server
+     * @param ip Server IP
+     * @returns {Promise<Buffer>} Server Icon Buffer
      */
 
-    async icon(ipServer: String): Promise<Buffer> {
-        
-        if(!ipServer) throw new Error("No se ingreso ningun servidor.");
-        if(typeof ipServer != 'string') throw new Error("La ip del servidor debe ser tipo string.");
-        ;
-
-        const url = `https://api.mcsrvstat.us/icon/${ipServer}`;
+    async icon(ip: String): Promise<Buffer> {
+        if(typeof ip != 'string') new Error("The ip must be a string I received " + typeof ip);
+        const url = `https://api.mcsrvstat.us/icon/${ip}`;
         const fetchResponse = await fetch(url, options);
         const response = await fetchResponse.buffer();
         return response;
