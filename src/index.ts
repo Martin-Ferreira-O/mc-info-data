@@ -6,13 +6,13 @@ const options = {
         "Content-Type": "Application/json" 
     } 
 };
-class requestApi {
+class MCInfo {
     constructor() {
     }
     
     /**
      * You get the information from a server.
-     * @param ip The ip to find information.
+     * @param {string} ip The ip to find information.
      * @returns {Promise<ServerInformation>} An information json object.
      */
     async server(ip: string): Promise<ServerInformation> {
@@ -99,4 +99,4 @@ class requestApi {
     }
 
 };
-module.exports = { requestApi }
+module.exports = { MCInfo }

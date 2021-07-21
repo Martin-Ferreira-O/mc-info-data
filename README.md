@@ -1,37 +1,29 @@
 # Mc-info-data
-Api completamente fácil de usar para obtener información útil de cualquier servidor o usuario en Minecraft.
-## ¿Porqué usarlo?
-### 🌀 Creado con TypeScript.
-### 📦 Orientado a objetos
-### 💥 Facil de usar
+Easy to use api to get useful information from any server or user in Minecraft.
+## Why use?
+### 🌀 Created with TS.
+### 📦 Object Oriented
+### 💥 Easy to use
 
 
 #### ChangeLog
 ```diff
-+ Metodo body 
-Muestra la imagen de una skin premium
-+ Metodo skin
-Muestra la imagen para descargar de una skin premium
-+ Metodo namemcLikes
-Mostrara las personas que han otorgado likes a un servidor de minecraft Mediante NameMC
-- Muchos bugs arreglados.
-Donde se hacian las requests
++ All lang changed to english.
++ Added interfaces.
 ```
 
 ### Support
 ```
-Puedes encontrar soporte en este discord.
+You can find support on this discord.
 https://discord.gg/xqS8PZB
 ```
-#### Ejemplos
+#### Examples
 ```js
-const {requestApi} = require("mc-info-data");
-const client = new requestApi();// Creamos un nuevo objeto.
+const { MCInfo } = require("mc-info-data");
+const mcinfo = new MCInfo();
 
 // Para obtener información de un servidor.
-client.server("hypixel.net").then(res => {// Devuelve promesa por lo que tambien podemos usar la sintaxis de async/await
-  console.log(res)
-});
+mcinfo.server("hypixel.net").then(console.log);
 
 /*
 Response
@@ -52,18 +44,15 @@ Response
       '        <span style="color: #FFAA00"><span style="font-weight: bold;">SKYBLOCK 0.11 </span></span><span style="color: #AAAAAA">- </span><span style="color: #AA00AA"><span style="font-weight: bold;">DWARVEN MINES</span></span>'
     ]
   },
-  players: { online: 108336, max: 200000, listUsers: undefined },
+  players: { online: 108336, max: 200000 },
   version: 'Requires MC 1.8 / 1.16',
   hostname: 'mc.hypixel.net',
-  software: undefined
 }
 */
 ```
-#### Para obtener el historial de nicks de un usuario en minecraft
+### If you want to get the nickname history it is very easy!
 ```js
-client.history("Nickname, example Rappi").then(m => {
-  console.log(m)
-});
+mcinfo.history("Nickname, example Rappi").then(console.log());
 /*
 Response
 [
@@ -76,54 +65,27 @@ Response
   { name: 'Rappi', changedToAt: 1484933586000 }
 ]
 */
-// Podrian usar un forEach para ver cada elemento del array y el npm momentjs para obtener una legible.
-
-client.history("Rappi").then(m => {
-  m.forEach(async (v) => {
-    await console.log(v.name + " cambiado el " + moment(v.changedToAt).format("L"))
-  })
+const moment = require("moment");
+mcinfo.history("Rappi").then(m => {
+  m.forEach(v => {
+    console.log(v.name + " Changed on " + moment(v.changedToAt).format("L"));
+  });
 });
 ```
 
 ### Metodos.
 ```js
-server() // Recibe de parametro una IP a buscar información. <String> 
-// Devuelve una promesa (Objeto con información del servidor).
+server() // Receive an IP parameter to search for information.
 
-history() // Recibe de parametro un nickname a buscar información
-// Devuelve una promesa (Array de nicknames cambiados por el usuario).
+history() // Receive parameter a nickname to search for information
 
-namemcLikes() // Recibe de parametro un servidor a buscar información
-// Devuelve una promesa (Array de nicksnames || Si el array supera los 500 nicknames otorgara un numero.)
+namemcLikes() // Receive parameter from a server to search for information
 
-body() // Recibe de parametro un nickname, muestra el cuerpo de una skin
-// Devuelve una promesa (Buffer de la imagen)
+body() // Receive a nickname parameter, show the body of a skin
 
-skin() // Recibe de parametro un nickname muestra una skin para descarfar
-// Devuelve una promesa (Buffer de la imagen)
+skin() // Receive a nickname parameter show a skin to download
 
-icon() // Recibe de parametro un servidor de minecraft
-// Devuelve una promesa (Buffer del icono)
+icon() // Get a minecraft server IP as a parameter
 
-```
-
-### Ejemplos usando discord.js
-
-```js
-// Usaremos un ejemplo mostrando de estado en nuestro bot los usuarios conectados en nuestra network.
-const { Client } = require("discord.js");
-const { requestApi } = require("mc-info-data");
-const api = new requestApi();
-const client = new Client();
-
-client.on("ready", async () => {// Usamos una función asincronica para usar await.
-	// Evento ready se ejecuta cuando el bot inicia sesión.
-	setInterval(async () => {
-		const request = await api.server("MiServer"); // Deben colocar la ip de su servidor acá.
-		const usersOnline = request.players.online;
-    	client.user.setActivity(`${usersOnline} en mi network.`, {
-         	type: 'WATCHING'
-      	});
-  	}, 60000);
-});
+namemcLikes() // Get a minecraft server IP as a parameter
 ```
