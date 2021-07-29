@@ -22,7 +22,7 @@ https://discord.gg/xqS8PZB
 const { MCInfo } = require("mc-info-data");
 const mcinfo = new MCInfo();
 
-// Para obtener información de un servidor.
+// To get information from a server.
 mcinfo.server("hypixel.net").then(console.log);
 
 /*
@@ -73,7 +73,7 @@ mcinfo.history("Rappi").then(m => {
 });
 ```
 
-### Metodos.
+### Methods.
 ```js
 server() // Receive an IP parameter to search for information.
 
