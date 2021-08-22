@@ -1,6 +1,6 @@
 export interface IOptions {
-    method: string; 
-    headers: {
-        "Content-Type": string;
-    }
+	method: string;
+	headers: {
+		"Content-Type": string;
+	};
 }

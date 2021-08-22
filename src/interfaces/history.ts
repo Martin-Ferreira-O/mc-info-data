@@ -1,4 +1,4 @@
 export interface NicknameHistory {
-    name: string;
-    changedToAt: number;
+	name: string;
+	changedToAt: number;
 }

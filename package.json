@@ -1,18 +1,16 @@
 {
     "dependencies": {
-        "node-fetch": "^2.6.1"
+        "axios": "^0.21.1"
     },
     "name": "mc-info-data",
     "description": "API completamente sencilla de usar para sacar información de servidores y usuarios en minecraft.",
-    "version": "1.7.0",
+    "version": "1.8.0",
     "main": "dist/index.js",
     "type": "commonjs",
     "types": "./dist/index.d.ts",
     "scripts": {
         "start": "ts-node src/index.ts",
-        "build": "tsc",
-        "watch": "tsc --watch",
-        "test": "cd test && npm run test"
+        "build": "tsc"
     },
     "repository": {
         "type": "git",
@@ -32,8 +30,6 @@
     "homepage": "https://github.com/Kapone-dev/mc-info-data#readme",
     "devDependencies": {
         "@types/node": "^15.14.2",
-        "@types/node-fetch": "^2.5.10",
-        "ts-node": "^10.0.0",
         "typescript": "^4.3.5"
     }
 }
