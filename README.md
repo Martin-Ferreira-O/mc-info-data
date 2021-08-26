@@ -8,8 +8,8 @@ Easy to use api to get useful information from any server or user in Minecraft.
 
 #### ChangeLog
 ```diff
-+ All lang changed to english.
-+ Added interfaces.
++ New class to get UUID more easy
+- Innecesay code lol
 ```
 
 ### Support
@@ -52,7 +52,9 @@ Response
 ```
 ### If you want to get the nickname history it is very easy!
 ```js
-mcinfo.history("Nickname, example Rappi").then(console.log());
+const {MCInfo} = require("mc-info-data");
+const mcinfo = new MCInfo();
+mcinfo.history("Rappi").then(console.log);
 /*
 Response
 [
@@ -65,12 +67,6 @@ Response
   { name: 'Rappi', changedToAt: 1484933586000 }
 ]
 */
-const moment = require("moment");
-mcinfo.history("Rappi").then(m => {
-  m.forEach(v => {
-    console.log(v.name + " Changed on " + moment(v.changedToAt).format("L"));
-  });
-});
 ```
 
 ### Methods.
@@ -86,6 +82,4 @@ body() // Receive a nickname parameter, show the body of a skin
 skin() // Receive a nickname parameter show a skin to download
 
 icon() // Get a minecraft server IP as a parameter
-
-namemcLikes() // Get a minecraft server IP as a parameter
 ```

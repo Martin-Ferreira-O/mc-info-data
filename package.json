@@ -4,13 +4,14 @@
     },
     "name": "mc-info-data",
     "description": "API completamente sencilla de usar para sacar información de servidores y usuarios en minecraft.",
-    "version": "1.8.0",
+    "version": "1.8.1",
     "main": "dist/index.js",
     "type": "commonjs",
     "types": "./dist/index.d.ts",
     "scripts": {
         "start": "ts-node src/index.ts",
-        "build": "tsc"
+        "build": "tsc",
+        "pretty": "prettier --write \"./**/*.{ts, js}\""
     },
     "repository": {
         "type": "git",
